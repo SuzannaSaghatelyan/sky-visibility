@@ -7,11 +7,8 @@ from astropy.time import Time
 from astropy import units as u
 from datetime import datetime, timezone
 
-def get_visible_healpix_cells(lat, lon, time_utc, nside=64, output_format='json'):
-    """
-    Compute the visible HEALPix cells for a given observer location and time.
+def get_visible_healpix_cells(lat, lon, time_utc, nside=64, output_format='json') -> str:
 
-    """
     observer_location = EarthLocation(lat=lat * u.deg, lon=lon * u.deg, height=0 * u.m)
     observation_time = Time(time_utc)
     altaz_frame = AltAz(obstime=observation_time, location=observer_location)
@@ -36,10 +33,7 @@ def get_visible_healpix_cells(lat, lon, time_utc, nside=64, output_format='json'
 
 
 def visualize_visible_sky(visible_pixels, nside=64):
-    """
-    Visualize the visible HEALPix cells on a sky map.
 
-    """
     sky_map = np.full(hp.nside2npix(nside), hp.UNSEEN)
     sky_map[visible_pixels] = 1
 
@@ -49,7 +43,7 @@ def visualize_visible_sky(visible_pixels, nside=64):
     plt.close()
 
 
-if __name__ == "__main__":
+def main():
     latitude = 40.0
     longitude = 44.5
 
@@ -60,3 +54,5 @@ if __name__ == "__main__":
     print(f"Visible HEALPix cells (JSON) at {current_time_utc}: {visible_cells_json}")
 
     visualize_visible_sky(visible_cells)
+
+main()
