@@ -43,16 +43,17 @@ def visualize_visible_sky(visible_pixels, nside=64):
     plt.close()
 
 
-def main():
-    latitude = 40.0
-    longitude = 44.5
+def process_sky():
+    lat = float(input("Enter latitude "))
+    lon = float(input("Enter longitude "))
 
     current_time_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
-    visible_cells_json = get_visible_healpix_cells(latitude, longitude, current_time_utc, output_format='json')
+    visible_cells_json = get_visible_healpix_cells(lat, lon, current_time_utc, output_format='json')
     visible_cells = json.loads(visible_cells_json)["visible_cells"]
 
     print(f"Visible HEALPix cells (JSON) at {current_time_utc}: {visible_cells_json}")
 
     visualize_visible_sky(visible_cells)
 
-main()
+if __name__ == "__main__":
+    process_sky()
